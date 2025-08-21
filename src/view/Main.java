@@ -18,15 +18,16 @@ public class Main {
         do {
             System.out.println("1 - Cadastrar livro \n" +
                     "2 - Pegar livro emprestado \n" +
-                    "3 - Verificar livros emprestados \n" + 
+                    "3 - Verificar livros emprestados \n" +
                     "4 - Mostrar livros \n" +
                     "5 - Editar livro \n" +
-                    "6 - Devolver livro"+
-                    "7 - Encerrar");
+                    "6 - Devolver livro \n" +
+                    "7 - Encerrar\n");
+            System.out.printf("Digite o número:");
             int escolha = sc.nextInt();
             System.out.println();
 
-            switch (escolha){
+            switch (escolha) {
                 case 1:
                     System.out.println("Titulo do livro: ");
                     sc.nextLine();
@@ -41,7 +42,6 @@ public class Main {
                     Biblioteca.cadastrarLivro(titulo, autor, edicao, isnb);
                     System.out.println();
                     break;
-
                 case 2:
                     listarLivros();
                     System.out.println();
@@ -55,35 +55,28 @@ public class Main {
                     Biblioteca.emprestarLivro(indice - 1, nomeEmp);
                     System.out.println();
                     break;
-
                 case 3:
-
                     listarEmprestimos();
                     System.out.println();
                     break;
-
                 case 4:
-
                     listarLivros();
                     System.out.println();
                     break;
-
                 case 5:
-
-
+                    System.out.println("Qual livro deseja editar ?");
                     break;
-
                 case 6:
-
                     System.out.println("Qual livro você deseja devolver ?");
-
-
                     break;
-
+                case 7:
+                    System.out.println("Obrigado, tenha uma boa leitura.");
+                    finalizar = true;
+                    break;
                 default:
-                finalizar = true;
-                break;
+                    System.out.println("Código não existe.");
+                    break;
             }
-        }while (finalizar == false);
+        } while (finalizar == false);
     }
 }

@@ -6,8 +6,8 @@ import model.Livro;
 import java.util.ArrayList;
 
 public  class Biblioteca {
-    static ArrayList<Livro> livros = new ArrayList<>();
-    static ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+    public static ArrayList<Livro> livros = new ArrayList<>();
+    public static ArrayList<Emprestimo> emprestimos = new ArrayList<>();
 
     public static void cadastrarLivro(String titulo, String autor, String edicao, int isbn) {
         livros.add(new Livro(titulo, autor,  edicao, isbn));
