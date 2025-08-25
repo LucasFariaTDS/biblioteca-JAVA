@@ -1,82 +1,73 @@
 package view;
 
 import controller.Biblioteca;
-import model.Emprestimo;
+import model.*;
 
-import java.time.LocalDate;
-import java.util.Locale;
 import java.util.Scanner;
-
-import static controller.Biblioteca.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         boolean finalizar = false;
 
         do {
-            System.out.println("1 - Cadastrar livro \n" +
+            System.out.println("\n1 - Cadastrar livro \n" +
                     "2 - Pegar livro emprestado \n" +
                     "3 - Verificar livros emprestados \n" +
                     "4 - Mostrar livros \n" +
-                    "5 - Editar livro \n" +
-                    "6 - Devolver livro \n" +
+                    "5 - Devolver livro \n" +
+                    "6 - Relatório de livros mais emprestados \n" +
                     "7 - Encerrar\n");
-            System.out.printf("Digite o número:");
+            System.out.print("Digite o número: ");
             int escolha = sc.nextInt();
-            System.out.println();
+            sc.nextLine();
 
             switch (escolha) {
-                case 1:
-                    System.out.println("Titulo do livro: ");
-                    sc.nextLine();
+                case 1 -> {
+                    System.out.print("Título: ");
                     String titulo = sc.nextLine();
-                    System.out.println("Autor do livro: ");
+                    System.out.print("Autor: ");
                     String autor = sc.nextLine();
-                    System.out.println("Edição do livro");
+                    System.out.print("Edição: ");
                     String edicao = sc.nextLine();
-                    System.out.println("ISBN do livro: ");
-                    int isnb = sc.nextInt();
-
-                    Biblioteca.cadastrarLivro(titulo, autor, edicao, isnb);
-                    System.out.println();
-                    break;
-                case 2:
-                    listarLivros();
-                    System.out.println();
-
-                    System.out.println("Qual indice do livro ?");
-                    int indice = sc.nextInt();
-                    System.out.println("Qual nome de quem irá pegar o livro emprestado ?");
-                    String nomeEmp = sc.next();
-                    LocalDate.now();
-
-                    Biblioteca.emprestarLivro(indice - 1, nomeEmp);
-                    System.out.println();
-                    break;
-                case 3:
-                    listarEmprestimos();
-                    System.out.println();
-                    break;
-                case 4:
-                    listarLivros();
-                    System.out.println();
-                    break;
-                case 5:
-                    System.out.println("Qual livro deseja editar ?");
-                    break;
-                case 6:
-                    System.out.println("Qual livro você deseja devolver ?");
-                    break;
-                case 7:
-                    System.out.println("Obrigado, tenha uma boa leitura.");
+                    System.out.print("ISBN: ");
+                    String isbn = sc.nextLine();
+                    Biblioteca.cadastrarLivro(titulo, autor, edicao, isbn);
+                }
+                case 2 -> {
+                    Biblioteca.listarLivros();
+                    System.out.print("Qual índice do livro? ");
+                    int indice = sc.nextInt() - 1;
+                    sc.nextLine();
+                    System.out.print("Nome do usuário: ");
+                    String nome = sc.nextLine();
+                    System.out.print("Tipo (1-Aluno, 2-Professor): ");
+                    int tipo = sc.nextInt();
+                    Usuario usuario = (tipo == 1) ? new Aluno(nome) : new Professor(nome);
+                    Biblioteca.emprestarLivro(indice, usuario);
+                }
+                case 3 -> Biblioteca.listarEmprestimos();
+                case 4 -> Biblioteca.listarLivros();
+                case 5 -> {
+                    if (!Biblioteca.temEmprestimosAtivos()) {
+                        System.out.println("Não há nenhum livro para ser devolvido.");
+                    } else {
+                        Biblioteca.listarEmprestimos();
+                        System.out.print("Qual livro deseja devolver? ");
+                        int indice = sc.nextInt() - 1;
+                        sc.nextLine();
+                        System.out.print("Nome do usuário: ");
+                        String nome = sc.nextLine();
+                        Biblioteca.devolverLivro(indice, nome);
+                    }
+                }
+                case 6 -> Biblioteca.relatorioMaisEmprestados();
+                case 7 -> {
+                    System.out.println("Tenha uma boa leitura!");
                     finalizar = true;
-                    break;
-                default:
-                    System.out.println("Código não existe.");
-                    break;
+                }
+                default -> System.out.println("Opção inválida.");
             }
-        } while (finalizar == false);
+        } while (!finalizar);
     }
 }

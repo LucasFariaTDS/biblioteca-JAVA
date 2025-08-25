@@ -1,47 +1,43 @@
 package model;
 
 public class Livro {
-    String titulo;
-    String autor;
-    String edicao;
-    int isnb;
+    private String titulo;
+    private String autor;
+    private String edicao;
+    private String isbn;
+    private int contadorEmprestimos = 0;
 
-    public Livro(String titulo, String autor,String edicao, int isnb) {
+    public Livro(String titulo, String autor, String edicao, String isbn) {
+        if (isbn == null || isbn.isEmpty() || edicao == null || edicao.isEmpty()) {
+            throw new IllegalArgumentException("ISBN e edição são obrigatórios!");
+        }
         this.titulo = titulo;
         this.autor = autor;
         this.edicao = edicao;
-        this.isnb = isnb;
-    }
-
-    public String getEdicao() {
-        return edicao;
-    }
-
-    public void setEdicao(String edicao) {
-        this.edicao = edicao;
-    }
-
-    public int getIsnb() {
-        return isnb;
-    }
-
-    public void setIsnb(int isnb) {
-        this.isnb = isnb;
-    }
-
-    public String getAutor() {
-        return autor;
+        this.isbn = isbn;
     }
 
     public String getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public String getAutor() {
+        return autor;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public String getEdicao() {
+        return edicao;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void incrementarEmprestimos() {
+        contadorEmprestimos++;
+    }
+
+    public int getContadorEmprestimos() {
+        return contadorEmprestimos;
     }
 }
